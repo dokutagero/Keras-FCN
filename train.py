@@ -176,7 +176,7 @@ if __name__ == '__main__':
     batchnorm_momentum = 0.95
     # model_name = 'FCN_Vgg16_32s'
     batch_size = 2 
-    epochs = 10 
+    epochs = 1 
     lr_base = 0.01 #* (float(batch_size) / 16)
     lr_power = 0.9
     resume_training = False
@@ -211,8 +211,8 @@ if __name__ == '__main__':
         ignore_label = None
         label_cval = 0
     if dataset == 'bridge':
-        train_file_path = os.path.expanduser('~/repos/bridgedegradationseg/dataset/bridge_masks/tfile.txt')
-        val_file_path = os.path.expanduser('~/repos/bridgedegradationseg/dataset/bridge_masks/valfile.txt')
+        train_file_path = os.path.expanduser('tfile.txt')
+        val_file_path = os.path.expanduser('valfile.txt')
         data_dir = os.path.expanduser('~/repos/bridgedegradationseg/dataset/images/combined')
         label_dir = os.path.expanduser('~/repos/bridgedegradationseg/dataset/bridge_masks/combined')
         data_suffix = '.jpg'
