@@ -173,7 +173,7 @@ if __name__ == '__main__':
     # model_name = 'FCN_Vgg16_32s'
     #model_name = 'Atrous_DenseNet'
     #model_name = 'DenseNet_FCN'
-    batch_size = 8 
+    batch_size = 1 
     batchnorm_momentum = 0.95
     epochs = 2
     lr_base = 0.01 * (float(batch_size) / 16)
@@ -217,8 +217,8 @@ if __name__ == '__main__':
         data_suffix = '.jpg'
         label_suffix='.png'
         classes = 2
-        loss_fn = sparse_categorical_crossentropy
-        metrics = [sparse_categorical_crossentropy]
+        loss_fn = softmax_sparse_crossentropy_ignoring_last_label
+        metrics = [sparse_accuracy_ignoring_last_label]
         loss_shape = None
         ignore_label = None
         label_cval = 0
