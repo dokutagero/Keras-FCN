@@ -173,10 +173,11 @@ if __name__ == '__main__':
     # model_name = 'FCN_Vgg16_32s'
     #model_name = 'Atrous_DenseNet'
     #model_name = 'DenseNet_FCN'
-    batch_size = 1 
     batchnorm_momentum = 0.95
-    epochs = 2
-    lr_base = 0.01 * (float(batch_size) / 16)
+    # model_name = 'FCN_Vgg16_32s'
+    batch_size = 2 
+    epochs = 10 
+    lr_base = 0.01 #* (float(batch_size) / 16)
     lr_power = 0.9
     resume_training = False
     if model_name is 'AtrousFCN_Resnet50_16s':
@@ -245,6 +246,6 @@ if __name__ == '__main__':
     session = tf.Session(config=config)
     K.set_session(session)
     train(batch_size, epochs, lr_base, lr_power, weight_decay, classes, model_name, train_file_path, val_file_path,
-          data_dir, label_dir, target_size=target_size, batchnorm_momentum=batchnorm_momentum, resume_training=resume_training,
+          data_dir, label_dir, target_size=target_size, batchnorm_momentum=0.9, resume_training=resume_training,
           class_weight=class_weight, loss_fn=loss_fn, metrics=metrics, loss_shape=loss_shape, data_suffix=data_suffix,
           label_suffix=label_suffix, ignore_label=ignore_label, label_cval=label_cval)
