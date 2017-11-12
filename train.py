@@ -10,6 +10,8 @@ from keras.objectives import *
 from keras.metrics import binary_accuracy
 from keras.models import load_model
 import keras.backend as K
+from keras.losses import sparse_categorical_crossentropy
+from keras.metrics import sparse_categorical_accuracy
 #import keras.utils.visualize_util as vis_util
 
 from models import *
@@ -167,11 +169,13 @@ def train(batch_size, epochs, lr_base, lr_power, weight_decay, classes,
 
 if __name__ == '__main__':
     model_name = 'AtrousFCN_Resnet50_16s'
+    # model_name = 'FCN_ResNet50_32s'
+    # model_name = 'FCN_Vgg16_32s'
     #model_name = 'Atrous_DenseNet'
     #model_name = 'DenseNet_FCN'
-    batch_size = 16
+    batch_size = 8 
     batchnorm_momentum = 0.95
-    epochs = 250
+    epochs = 2
     lr_base = 0.01 * (float(batch_size) / 16)
     lr_power = 0.9
     resume_training = False
@@ -179,8 +183,8 @@ if __name__ == '__main__':
         weight_decay = 0.0001/2
     else:
         weight_decay = 1e-4
-    target_size = (320, 320)
-    dataset = 'VOC2012_BERKELEY'
+    # dataset = 'VOC2012_BERKELEY'
+    dataset = 'bridge'
     if dataset == 'VOC2012_BERKELEY':
         # pascal voc + berkeley semantic contours annotations
         train_file_path = os.path.expanduser('~/.keras/datasets/VOC2012/combined_imageset_train.txt') #Data/VOClarge/VOC2012/ImageSets/Segmentation
@@ -205,6 +209,21 @@ if __name__ == '__main__':
         data_suffix='.jpg'
         ignore_label = None
         label_cval = 0
+    if dataset == 'bridge':
+        train_file_path = os.path.expanduser('~/repos/bridgedegradationseg/dataset/bridge_masks/tfile.txt')
+        val_file_path = os.path.expanduser('~/repos/bridgedegradationseg/dataset/bridge_masks/valfile.txt')
+        data_dir = os.path.expanduser('~/repos/bridgedegradationseg/dataset/images/combined')
+        label_dir = os.path.expanduser('~/repos/bridgedegradationseg/dataset/bridge_masks/combined')
+        data_suffix = '.jpg'
+        label_suffix='.png'
+        classes = 2
+        loss_fn = sparse_categorical_crossentropy
+        metrics = [sparse_categorical_crossentropy]
+        loss_shape = None
+        ignore_label = None
+        label_cval = 0
+        target_size = (768, 1024)
+        # target_size = None 
 
 
     # ###################### loss function & metric ########################
